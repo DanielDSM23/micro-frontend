@@ -12,13 +12,6 @@ function Navbar() {
     return () => unsub();
   }, []);
 
-  useEffect(() => {
-    const unsub = eventBus.on('catalog:addtocart', () => {
-      console.log('Produit ajouté au panier !');
-    });
-    return () => unsub();
-  }, []);
-
   return (
     <nav className="navbar">
       <div className="navbar-brand">
