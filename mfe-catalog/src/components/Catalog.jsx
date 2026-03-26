@@ -14,6 +14,7 @@ const PRODUCTS = [
 function ProductCard({ product }) {
   const handleAddToCart = () => {
     // TODO: emettre un evenement pour ajouter ce produit au panier
+    eventBus.emit('catalog:addtocart', product);
   };
 
   return (
