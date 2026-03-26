@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
 
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -43,7 +44,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'shell',
       // TODO: declarer mfe-header comme remote (il tourne sur le port 3001)
-      remotes: {},
+      remotes: {
+        mfe_header: "mfe_header@http://localhost:3001/remoteEntry.js",
+      },
       shared: {
         react: { singleton: true, requiredVersion: '^18.2.0' },
         'react-dom': { singleton: true, requiredVersion: '^18.2.0' },
