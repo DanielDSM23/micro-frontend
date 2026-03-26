@@ -6,23 +6,16 @@ function Cart() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    // TODO 1: s'abonner aux ajouts au panier et mettre a jour le state items
-    const unsub = eventBus.on('catalog:addtocart', (item) => { 
-      const cartItem = {
-        ...item,
-        cartId: Date.now() + Math.random(),
-      };
-      setItems(prev => [...prev, cartItem]);
+    const unsubscribe = eventBus.on('cart:add', (product) => {
+      setItems(prev => [...prev, { ...product, cartId: Date.now() }]);
     });
-    return () => unsub();
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
-    // TODO 2: emettre un evenement quand le panier change
-    const total = items.reduce((sum, item) => sum + item.price, 0);
-    eventBus.emit('cart:updated', { 
+    eventBus.emit('cart:updated', {
       count: items.length,
-      total,
+      total: items.reduce((sum, item) => sum + item.price, 0),
     });
   }, [items]);
 
