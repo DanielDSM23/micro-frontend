@@ -6,18 +6,10 @@ function Navbar() {
   const [notifications, setNotifications] = useState(0);
 
   useEffect(() => {
-    // TODO: quand un joueur rejoint une partie, incrementer le badge notifications
-    // Penser au cleanup React
-    const handlePlayerJoined = (data) => {
-      console.log('[EventBus] Joueur a rejoint:', data);
-      setNotifications(prev => prev + 1); // incrémente le badge
-    };
-
-    const unsubscribe = eventBus.on('player:joined', handlePlayerJoined);
-
-    return () => {
-      unsubscribe();
-    };
+    const unsub = eventBus.on('game:joined', () => {
+      setNotifications(prev => prev + 1);
+    });
+    return () => unsub();
   }, []);
 
   return (
