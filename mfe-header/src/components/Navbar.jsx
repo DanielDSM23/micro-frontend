@@ -7,8 +7,24 @@ function Navbar() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    // TODO: ecouter les evenements du Lobby et du Cart pour mettre a jour les badges
-    // Penser au cleanup
+
+    const handleLobbyEvent = () => {
+      setNotifications(prev => prev + 1);
+    };
+
+    const handleCartEvent = (count) => {
+      setCartCount(count => count + 1);
+    };
+
+   
+    eventBus.on('game:joined', handleLobbyEvent);
+    eventBus.on('cart:add', handleCartEvent);
+
+    
+    return () => {
+      eventBus.off('game:joined', handleLobbyEvent);
+      eventBus.off('cart:add', handleCartEvent);
+    };
   }, []);
 
   return (
