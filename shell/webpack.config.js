@@ -40,16 +40,13 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
-     new ModuleFederationPlugin({
-      name: "shell",
-
-      remotes: {
-        app1: "app1@http://localhost:3000/remoteEntry.js",
-      },
-
+    new ModuleFederationPlugin({
+      name: 'shell',
+      // TODO: declarer mfe-header comme remote (il tourne sur le port 3001)
+      remotes: {},
       shared: {
-        react: { singleton: true, eager: true, requiredVersion: false },
-        "react-dom": { singleton: true, eager: true, requiredVersion: false },
+        react: { singleton: true, requiredVersion: '^18.2.0' },
+        'react-dom': { singleton: true, requiredVersion: '^18.2.0' },
       },
     }),
     new HtmlWebpackPlugin({
