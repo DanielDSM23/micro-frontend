@@ -40,18 +40,17 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
-    new ModuleFederationPlugin({
-      // TODO 1: Donner un nom au Shell
-      // name: '???',
+     new ModuleFederationPlugin({
+      name: "shell",
 
-      // TODO 2: Configurer les remotes (vide pour l'instant)
-      // remotes: {},
+      remotes: {
+        app1: "app1@http://localhost:3000/remoteEntry.js",
+      },
 
-      // TODO 3: Configurer les dependances partagees
-      // shared: {
-      //   react: { singleton: true, requiredVersion: '^18.2.0' },
-      //   'react-dom': { singleton: true, requiredVersion: '^18.2.0' },
-      // },
+      shared: {
+        react: { singleton: true, eager: true, requiredVersion: false },
+        "react-dom": { singleton: true, eager: true, requiredVersion: false },
+      },
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
